@@ -67,7 +67,8 @@ export default function QuotePage() {
       </section>
 
       {/* Quote Form */}
-      <section className="py-10 px-5 sm:px-10 max-w-[800px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-narrow">
         {isSubmitted ? (
           <div className="card-dark rounded-2xl p-12 text-center">
             <div className="text-6xl mb-6">✅</div>
@@ -283,13 +284,17 @@ export default function QuotePage() {
             </p>
           </form>
         )}
+        </div>
       </section>
 
       {/* Why Request a Quote */}
-      <section className="py-16 px-5 sm:px-10 max-w-[900px] mx-auto">
-        <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold mb-8 text-center">
-          Why Request a Quote?
-        </h2>
+      <section className="section-padding px-5 sm:px-10">
+        <div className="container-medium">
+          <div className="section-header mb-10">
+            <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold text-gold-gradient">
+              Why Request a Quote?
+            </h2>
+          </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <BenefitCard
             icon="💰"
@@ -306,6 +311,7 @@ export default function QuotePage() {
             title="No Obligation"
             description="We'll send a quote, no strings attached. Take your time to decide."
           />
+          </div>
         </div>
       </section>
 

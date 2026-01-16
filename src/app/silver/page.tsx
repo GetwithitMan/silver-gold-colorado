@@ -70,8 +70,9 @@ export default function SilverPage() {
       </section>
 
       {/* Category Cards */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CategoryCard
             title="SILVER COINS"
             description="Government-minted coins backed by sovereign nations"
@@ -96,12 +97,14 @@ export default function SilverPage() {
             href="/silver/rounds"
             gradient="from-[#D8D8D8] to-[#B8B8B8]"
           />
+          </div>
         </div>
       </section>
 
       {/* Stacker's Corner */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1200px] mx-auto">
-        <div className="bg-gradient-to-br from-[rgba(192,192,192,0.1)] to-[rgba(192,192,192,0.02)] border border-[rgba(192,192,192,0.2)] rounded-2xl p-8">
+      <section className="section-padding px-5 sm:px-10">
+        <div className="container-wide">
+          <div className="bg-gradient-to-br from-[rgba(192,192,192,0.1)] to-[rgba(192,192,192,0.02)] border border-[rgba(192,192,192,0.2)] rounded-2xl p-8 md:p-10">
           <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold mb-6 text-center text-silver-gradient">
             Stacker&apos;s Corner
           </h2>
@@ -126,43 +129,46 @@ export default function SilverPage() {
               savings="Lowest premium rounds"
               icon="🦬"
             />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Silver Products */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1400px] mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-3 text-silver-gradient">
-            Popular Silver Products
-          </h2>
-          <p className="text-[#666]">Our most sought-after silver coins, rounds, and bars</p>
-        </div>
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-full">
+          <div className="section-header mb-10">
+            <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-3 text-silver-gradient">
+              Popular Silver Products
+            </h2>
+            <p className="text-[#666]">Our most sought-after silver coins, rounds, and bars</p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {featuredSilver.map((product, index) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              spotPrices={spotPrices}
-              delay={index * 80}
-            />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {featuredSilver.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                spotPrices={spotPrices}
+                delay={index * 80}
+              />
+            ))}
+          </div>
 
-        <div className="text-center mt-10">
-          <Link
-            href="/silver/coins"
-            className="inline-block bg-transparent border border-[rgba(192,192,192,0.5)] text-[#C0C0C0] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(192,192,192,0.1)] transition-all"
-          >
-            View All Silver Products →
-          </Link>
+          <div className="text-center mt-12">
+            <Link
+              href="/silver/coins"
+              className="inline-block bg-transparent border border-[rgba(192,192,192,0.5)] text-[#C0C0C0] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(192,192,192,0.1)] transition-all"
+            >
+              View All Silver Products →
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Gold/Silver Ratio Explainer */}
-      <section className="py-16 px-5 sm:px-10 bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] border-t border-[rgba(192,192,192,0.1)]">
-        <div className="max-w-[800px] mx-auto text-center">
+      <section className="section-padding px-5 sm:px-10 bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a]">
+        <div className="container-narrow text-center">
           <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold mb-4">
             Understanding the Gold/Silver Ratio
           </h2>
@@ -181,11 +187,13 @@ export default function SilverPage() {
       </section>
 
       {/* Why Silver Section */}
-      <section className="py-20 px-5 sm:px-10 border-t border-[rgba(192,192,192,0.1)]">
-        <div className="max-w-[1200px] mx-auto">
-          <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold text-center mb-12 text-silver-gradient">
-            Why Stack Silver?
-          </h2>
+      <section className="section-padding px-5 sm:px-10 section-divider-strong">
+        <div className="container-wide">
+          <div className="section-header mb-12">
+            <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold text-silver-gradient">
+              Why Stack Silver?
+            </h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <ReasonCard
               icon="💵"
@@ -222,8 +230,8 @@ export default function SilverPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(192,192,192,0.1)_0%,transparent_70%)]">
-        <div className="text-center max-w-[600px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(192,192,192,0.1)_0%,transparent_70%)]">
+        <div className="text-center container-narrow mx-auto">
           <h2 className="font-[var(--font-cinzel)] text-3xl mb-4">Ready to Stack Silver?</h2>
           <p className="text-[#888] text-lg mb-8">
             Contact us today for the best prices on silver bullion

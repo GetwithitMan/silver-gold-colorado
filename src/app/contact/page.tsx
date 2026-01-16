@@ -52,7 +52,8 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1100px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-wide">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Contact Info */}
           <div>
@@ -180,14 +181,18 @@ export default function ContactPage() {
               </form>
             )}
           </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 px-5 sm:px-10 max-w-[900px] mx-auto border-t border-[rgba(255,215,0,0.1)]">
-        <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold mb-8 text-center">
-          Frequently Asked Questions
-        </h2>
+      <section className="section-padding px-5 sm:px-10 section-divider-strong">
+        <div className="container-medium">
+          <div className="section-header mb-10">
+            <h2 className="font-[var(--font-cinzel)] text-2xl font-semibold text-gold-gradient">
+              Frequently Asked Questions
+            </h2>
+          </div>
 
         <div className="space-y-4">
           <FAQItem
@@ -210,6 +215,7 @@ export default function ContactPage() {
             question="Can I pick up my order locally?"
             answer="Yes, local pickup is available by appointment. Contact us to arrange a convenient time."
           />
+          </div>
         </div>
       </section>
 

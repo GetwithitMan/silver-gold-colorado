@@ -46,7 +46,8 @@ export default function SpotPricesPage() {
       </section>
 
       {/* Price Cards Grid */}
-      <section className="py-10 px-5 sm:px-10 max-w-[1200px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-wide">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {metals.map((metal) => (
             <PriceCard
@@ -60,11 +61,13 @@ export default function SpotPricesPage() {
               loading={loading}
             />
           ))}
+          </div>
         </div>
       </section>
 
       {/* Gold/Silver Ratio */}
-      <section className="py-10 px-5 sm:px-10 max-w-[1200px] mx-auto">
+      <section className="section-padding px-5 sm:px-10">
+        <div className="container-wide">
         <div className="bg-gradient-to-br from-[rgba(255,215,0,0.05)] to-[rgba(192,192,192,0.05)] border border-[rgba(255,215,0,0.2)] rounded-2xl p-8 text-center">
           <h2 className="font-[var(--font-cinzel)] text-2xl mb-4">Gold/Silver Ratio</h2>
           <div className="font-[var(--font-jetbrains)] text-5xl font-bold mb-4">
@@ -87,11 +90,13 @@ export default function SpotPricesPage() {
           <p className="text-[#666] text-sm mt-4">
             A ratio above 80 historically suggests silver may be undervalued relative to gold
           </p>
+          </div>
         </div>
       </section>
 
       {/* Price Comparison Table */}
-      <section className="py-10 px-5 sm:px-10 max-w-[1200px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-wide">
         <h2 className="font-[var(--font-cinzel)] text-2xl mb-6 text-center">Price Comparison</h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
@@ -134,12 +139,16 @@ export default function SpotPricesPage() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       </section>
 
       {/* Market Info */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1000px] mx-auto">
-        <h2 className="font-[var(--font-cinzel)] text-2xl mb-6 text-center">Understanding Spot Prices</h2>
+      <section className="section-padding px-5 sm:px-10">
+        <div className="container-medium">
+          <div className="section-header mb-10">
+            <h2 className="font-[var(--font-cinzel)] text-2xl text-gold-gradient">Understanding Spot Prices</h2>
+          </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InfoCard
             title="What is Spot Price?"
@@ -157,12 +166,13 @@ export default function SpotPricesPage() {
             title="When Do Markets Trade?"
             content="Precious metals trade nearly 24 hours a day, 5 days a week across global exchanges in New York (COMEX), London (LBMA), and Shanghai."
           />
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)]">
-        <div className="text-center max-w-[600px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)] section-divider">
+        <div className="text-center container-narrow mx-auto">
           <h2 className="font-[var(--font-cinzel)] text-2xl mb-4">Ready to Buy?</h2>
           <p className="text-[#888] mb-8">
             Lock in today&apos;s prices with a quick quote

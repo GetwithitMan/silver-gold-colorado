@@ -165,17 +165,19 @@ export default function Home() {
       <Hero prices={prices} />
 
       {/* Featured Products Section */}
-      <section id="products" className="py-20 px-5 sm:px-10 max-w-[1400px] mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="font-[var(--font-cinzel)] text-3xl sm:text-4xl font-semibold mb-3 text-mixed-gradient">
-            Today&apos;s Prices
-          </h2>
-          <p className="text-[#666] text-base mb-8">
-            Live spot prices from Gold-API.com • Prices include spot + premium
-          </p>
+      <section id="products" className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-full">
+          <div className="section-header mb-12">
+            <h2 className="font-[var(--font-cinzel)] text-3xl sm:text-4xl font-semibold mb-3 text-mixed-gradient">
+              Today&apos;s Prices
+            </h2>
+            <p className="text-[#666] text-base">
+              Live spot prices from Gold-API.com • Prices include spot + premium
+            </p>
+          </div>
 
           {/* Filter Tabs */}
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4 mt-8">
             <FilterTab
               active={activeFilter === 'all'}
               onClick={() => setActiveFilter('all')}
@@ -197,37 +199,44 @@ export default function Home() {
               Silver
             </FilterTab>
           </div>
-        </div>
 
-        {/* Coins Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredCoins.map((coin, index) => (
-            <CoinCard key={coin.id} coin={coin} spotPrice={prices} delay={index * 100} />
-          ))}
+          {/* Coins Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
+            {filteredCoins.map((coin, index) => (
+              <CoinCard key={coin.id} coin={coin} spotPrice={prices} delay={index * 100} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Trust Section */}
-      <section className="bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] py-20 px-5 sm:px-10 border-t border-b border-[rgba(255,215,0,0.1)]">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <TrustItem icon="🏔️" title="Colorado Based">
-            Proudly serving the Rocky Mountain region with fast, secure delivery
-          </TrustItem>
-          <TrustItem icon="💰" title="Best Prices">
-            Lowest premiums over spot with no hidden fees or markups
-          </TrustItem>
-          <TrustItem icon="🔒" title="Secure Shipping">
-            Fully insured, discreet packaging with signature required
-          </TrustItem>
-          <TrustItem icon="⭐" title="Expert Service">
-            Personalized guidance from experienced precious metals specialists
-          </TrustItem>
+      <section className="bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] section-padding px-5 sm:px-10 section-divider-strong">
+        <div className="container-wide">
+          <div className="section-header mb-10">
+            <h2 className="font-[var(--font-cinzel)] text-2xl sm:text-3xl font-semibold text-gold-gradient">
+              Why Choose Us
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <TrustItem icon="🏔️" title="Colorado Based">
+              Proudly serving the Rocky Mountain region with fast, secure delivery
+            </TrustItem>
+            <TrustItem icon="💰" title="Best Prices">
+              Lowest premiums over spot with no hidden fees or markups
+            </TrustItem>
+            <TrustItem icon="🔒" title="Secure Shipping">
+              Fully insured, discreet packaging with signature required
+            </TrustItem>
+            <TrustItem icon="⭐" title="Expert Service">
+              Personalized guidance from experienced precious metals specialists
+            </TrustItem>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-24 px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)]">
-        <div className="text-center max-w-[600px] mx-auto">
+      <section id="contact" className="section-padding px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)] section-divider">
+        <div className="text-center container-narrow mx-auto">
           <h2 className="font-[var(--font-cinzel)] text-3xl sm:text-4xl mb-4">
             Ready to Start Your Stack?
           </h2>

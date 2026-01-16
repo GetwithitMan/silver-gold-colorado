@@ -29,7 +29,8 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-16 px-5 sm:px-10 max-w-[1000px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 section-divider">
+        <div className="container-medium">
         <div className="flex flex-col md:flex-row gap-10 items-center">
           <div className="flex-1">
             <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-6 text-gold-gradient">
@@ -62,11 +63,12 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Why Colorado */}
-      <section className="py-16 px-5 sm:px-10 bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] border-t border-b border-[rgba(255,215,0,0.1)]">
-        <div className="max-w-[1000px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] section-divider-strong">
+        <div className="container-medium">
           <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-6 text-center">
             Why Colorado?
           </h2>
@@ -92,10 +94,13 @@ export default function AboutPage() {
       </section>
 
       {/* Our Promise */}
-      <section className="py-20 px-5 sm:px-10 max-w-[1200px] mx-auto">
-        <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-12 text-center text-gold-gradient">
-          Our Promise
-        </h2>
+      <section className="section-padding px-5 sm:px-10">
+        <div className="container-wide">
+          <div className="section-header mb-12">
+            <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold text-gold-gradient">
+              Our Promise
+            </h2>
+          </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <PromiseCard
             icon="💰"
@@ -127,12 +132,13 @@ export default function AboutPage() {
             title="No Pressure Sales"
             description="Take your time. Ask questions. We're here when you're ready."
           />
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)]">
-        <div className="text-center max-w-[600px] mx-auto">
+      <section className="section-padding px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)] section-divider">
+        <div className="text-center container-narrow mx-auto">
           <h2 className="font-[var(--font-cinzel)] text-3xl mb-4">Ready to Get Started?</h2>
           <p className="text-[#888] text-lg mb-8">
             Browse our collection or reach out with any questions

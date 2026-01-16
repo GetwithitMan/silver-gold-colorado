@@ -173,8 +173,8 @@ body {
 /* Card styling */
 .card-dark {
   background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-  border: 1px solid rgba(255,215,0,0.2);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,215,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
 /* Price change colors */
@@ -186,4 +186,148 @@ body {
   .backdrop-blur-custom {
     backdrop-filter: blur(10px);
   }
+}
+
+/* ========== LAYOUT & SPACING ========== */
+
+/* Section spacing - consistent vertical rhythm */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* Section dividers */
+.section-divider {
+  border-top: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.section-divider-strong {
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Content containers */
+.container-narrow {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-medium {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-wide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-full {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  margin-bottom: 0.75rem;
+}
+
+.section-header p {
+  color: #888;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Improved focus states */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Better text readability */
+.prose {
+  line-height: 1.75;
+  color: #999;
+}
+
+.prose p + p {
+  margin-top: 1.25rem;
+}
+
+/* Card grid spacing */
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+/* Hero sections */
+.hero-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Breathing room for inline elements */
+.inline-spacer > * + * {
+  margin-left: 1rem;
+}
+
+/* Visual hierarchy helpers */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Reduce visual noise on cards */
+.card-subtle {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-subtle:hover {
+  border-color: rgba(255, 215, 0, 0.2);
 }
