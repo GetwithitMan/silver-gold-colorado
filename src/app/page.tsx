@@ -1,65 +1,348 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import SpotPriceTicker from '@/components/SpotPriceTicker';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import CoinCard, { Coin } from '@/components/CoinCard';
+import Footer from '@/components/Footer';
+
+// Simulated live spot prices hook (would connect to real API in production)
+function useSpotPrices() {
+  const [prices, setPrices] = useState({
+    gold: { price: 2618.50, change: 12.30, changePercent: 0.47 },
+    silver: { price: 30.94, change: -0.21, changePercent: -0.67 },
+    platinum: { price: 1041.00, change: 8.50, changePercent: 0.82 },
+    palladium: { price: 976.00, change: -15.00, changePercent: -1.51 },
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPrices((prev) => ({
+        gold: {
+          ...prev.gold,
+          price: prev.gold.price + (Math.random() - 0.5) * 2,
+          change: prev.gold.change + (Math.random() - 0.5) * 0.5,
+        },
+        silver: {
+          ...prev.silver,
+          price: prev.silver.price + (Math.random() - 0.5) * 0.1,
+          change: prev.silver.change + (Math.random() - 0.5) * 0.05,
+        },
+        platinum: {
+          ...prev.platinum,
+          price: prev.platinum.price + (Math.random() - 0.5) * 3,
+          change: prev.platinum.change + (Math.random() - 0.5) * 0.5,
+        },
+        palladium: {
+          ...prev.palladium,
+          price: prev.palladium.price + (Math.random() - 0.5) * 4,
+          change: prev.palladium.change + (Math.random() - 0.5) * 0.5,
+        },
+      }));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return prices;
+}
+
+// Coin data with premiums over spot
+const coins: Coin[] = [
+  {
+    id: 1,
+    name: 'American Silver Eagle',
+    type: 'silver',
+    weight: '1 oz',
+    purity: '.999 Fine Silver',
+    premium: 4.99,
+    country: 'USA',
+    year: '2024',
+    image: '🦅',
+    description: 'The official silver bullion coin of the United States, featuring Lady Liberty and the American Bald Eagle.',
+    popular: true,
+  },
+  {
+    id: 2,
+    name: 'American Gold Eagle',
+    type: 'gold',
+    weight: '1 oz',
+    purity: '.9167 Fine Gold',
+    premium: 89.99,
+    country: 'USA',
+    year: '2024',
+    image: '🦅',
+    description: "America's premier gold bullion coin, backed by the U.S. government for weight and purity.",
+    popular: true,
+  },
+  {
+    id: 3,
+    name: 'Canadian Maple Leaf',
+    type: 'silver',
+    weight: '1 oz',
+    purity: '.9999 Fine Silver',
+    premium: 3.99,
+    country: 'Canada',
+    year: '2024',
+    image: '🍁',
+    description: 'One of the purest silver coins in the world with advanced security features.',
+  },
+  {
+    id: 4,
+    name: 'Canadian Gold Maple',
+    type: 'gold',
+    weight: '1 oz',
+    purity: '.9999 Fine Gold',
+    premium: 79.99,
+    country: 'Canada',
+    year: '2024',
+    image: '🍁',
+    description: "The world's purest gold bullion coin, featuring the iconic maple leaf design.",
+  },
+  {
+    id: 5,
+    name: 'Silver Buffalo Round',
+    type: 'silver',
+    weight: '1 oz',
+    purity: '.999 Fine Silver',
+    premium: 2.49,
+    country: 'USA',
+    year: '2024',
+    image: '🦬',
+    description: 'Classic American design at the lowest premiums - perfect for stacking.',
+  },
+  {
+    id: 6,
+    name: 'Gold Buffalo',
+    type: 'gold',
+    weight: '1 oz',
+    purity: '.9999 Fine Gold',
+    premium: 99.99,
+    country: 'USA',
+    year: '2024',
+    image: '🦬',
+    description: 'First .9999 pure gold coin from the U.S. Mint, featuring the iconic Buffalo design.',
+    popular: true,
+  },
+  {
+    id: 7,
+    name: 'Austrian Philharmonic',
+    type: 'silver',
+    weight: '1 oz',
+    purity: '.999 Fine Silver',
+    premium: 3.49,
+    country: 'Austria',
+    year: '2024',
+    image: '🎵',
+    description: "Europe's most popular silver bullion coin, honoring the Vienna Philharmonic Orchestra.",
+  },
+  {
+    id: 8,
+    name: 'South African Krugerrand',
+    type: 'gold',
+    weight: '1 oz',
+    purity: '.9167 Fine Gold',
+    premium: 69.99,
+    country: 'South Africa',
+    year: '2024',
+    image: '🦌',
+    description: 'The original gold bullion coin since 1967, highly recognized worldwide.',
+  },
+  {
+    id: 9,
+    name: '10 oz Silver Bar',
+    type: 'silver',
+    weight: '10 oz',
+    purity: '.999 Fine Silver',
+    premium: 19.99,
+    country: 'Various',
+    year: '2024',
+    image: '▬',
+    description: 'Perfect for stacking and storage, from trusted refiners worldwide.',
+  },
+  {
+    id: 10,
+    name: '1 oz Gold Bar',
+    type: 'gold',
+    weight: '1 oz',
+    purity: '.9999 Fine Gold',
+    premium: 49.99,
+    country: 'Various',
+    year: '2024',
+    image: '▬',
+    description: 'PAMP, Credit Suisse, or equivalent - certified and assayed.',
+  },
+];
 
 export default function Home() {
+  const prices = useSpotPrices();
+  const [activeFilter, setActiveFilter] = useState<'all' | 'gold' | 'silver'>('all');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 500);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const filteredCoins = activeFilter === 'all' ? coins : coins.filter((c) => c.type === activeFilter);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-[#0a0a0a] font-[var(--font-cormorant)]">
+      {/* Ticker */}
+      <SpotPriceTicker prices={prices} />
+
+      {/* Header */}
+      <Header />
+
+      {/* Hero */}
+      <Hero prices={prices} />
+
+      {/* Featured Products Section */}
+      <section id="products" className="py-20 px-5 sm:px-10 max-w-[1400px] mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="font-[var(--font-cinzel)] text-3xl sm:text-4xl font-semibold mb-3 text-mixed-gradient">
+            Today&apos;s Prices
+          </h2>
+          <p className="text-[#666] text-base mb-8">
+            Live pricing updated every 3 seconds • Prices include spot + premium
           </p>
+
+          {/* Filter Tabs */}
+          <div className="flex justify-center gap-4">
+            <FilterTab
+              active={activeFilter === 'all'}
+              onClick={() => setActiveFilter('all')}
+            >
+              All Products
+            </FilterTab>
+            <FilterTab
+              active={activeFilter === 'gold'}
+              onClick={() => setActiveFilter('gold')}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#FFD700] inline-block mr-2"></span>
+              Gold
+            </FilterTab>
+            <FilterTab
+              active={activeFilter === 'silver'}
+              onClick={() => setActiveFilter('silver')}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#C0C0C0] inline-block mr-2"></span>
+              Silver
+            </FilterTab>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Coins Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredCoins.map((coin, index) => (
+            <CoinCard key={coin.id} coin={coin} spotPrice={prices} delay={index * 100} />
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Trust Section */}
+      <section className="bg-gradient-to-b from-[#0a0a0a] via-[#111] to-[#0a0a0a] py-20 px-5 sm:px-10 border-t border-b border-[rgba(255,215,0,0.1)]">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <TrustItem icon="🏔️" title="Colorado Based">
+            Proudly serving the Rocky Mountain region with fast, secure delivery
+          </TrustItem>
+          <TrustItem icon="💰" title="Best Prices">
+            Lowest premiums over spot with no hidden fees or markups
+          </TrustItem>
+          <TrustItem icon="🔒" title="Secure Shipping">
+            Fully insured, discreet packaging with signature required
+          </TrustItem>
+          <TrustItem icon="⭐" title="Expert Service">
+            Personalized guidance from experienced precious metals specialists
+          </TrustItem>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section id="contact" className="py-24 px-5 sm:px-10 bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.1)_0%,transparent_70%)]">
+        <div className="text-center max-w-[600px] mx-auto">
+          <h2 className="font-[var(--font-cinzel)] text-3xl sm:text-4xl mb-4">
+            Ready to Start Your Stack?
+          </h2>
+          <p className="text-[#888] text-lg mb-8">
+            Contact us today for a personalized quote on any gold or silver products
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="tel:+19705551234"
+              className="btn-gold px-8 py-4 rounded-full font-[var(--font-cinzel)] text-sm font-semibold tracking-[1px] transition-all inline-flex items-center justify-center gap-2"
+            >
+              📞 Call (970) 555-GOLD
+            </a>
+            <a
+              href="mailto:info@silverandgoldcolorado.com"
+              className="bg-transparent border border-[rgba(192,192,192,0.5)] text-[#C0C0C0] px-8 py-4 rounded-full font-[var(--font-cinzel)] text-sm font-semibold tracking-[1px] hover:border-[#C0C0C0] hover:text-white hover:translate-y-[-3px] transition-all inline-flex items-center justify-center gap-2"
+            >
+              ✉️ Email Us
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-[#FFD700] to-[#FFA500] rounded-full text-black text-xl font-bold shadow-[0_5px_20px_rgba(255,215,0,0.4)] hover:translate-y-[-5px] transition-all z-50 animate-fadeIn"
+          aria-label="Scroll to top"
+        >
+          ↑
+        </button>
+      )}
+    </div>
+  );
+}
+
+function FilterTab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-6 py-3 rounded-full font-[var(--font-cinzel)] text-[13px] transition-all flex items-center ${
+        active
+          ? 'bg-gradient-to-br from-[rgba(255,215,0,0.2)] to-[rgba(192,192,192,0.2)] border border-[rgba(255,215,0,0.5)] text-white'
+          : 'bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] text-[#888] hover:border-[rgba(255,215,0,0.3)] hover:text-white'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TrustItem({
+  icon,
+  title,
+  children,
+}: {
+  icon: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="text-center p-8 bg-[rgba(255,255,255,0.02)] rounded-2xl border border-[rgba(255,255,255,0.05)] hover:border-[rgba(255,215,0,0.2)] hover:translate-y-[-5px] transition-all">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="font-[var(--font-cinzel)] text-lg text-[#FFD700] mb-3">{title}</h3>
+      <p className="text-[#888] text-sm leading-relaxed">{children}</p>
     </div>
   );
 }
