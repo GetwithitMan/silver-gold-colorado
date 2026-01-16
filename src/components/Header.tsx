@@ -26,16 +26,17 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <NavLink href="#gold">Gold</NavLink>
-          <NavLink href="#silver">Silver</NavLink>
-          <NavLink href="#bars">Bars</NavLink>
-          <NavLink href="#rounds">Rounds</NavLink>
+        <nav className="hidden md:flex items-center gap-6">
+          <NavLink href="/gold">Gold</NavLink>
+          <NavLink href="/silver">Silver</NavLink>
+          <NavLink href="/spot-prices">Spot Prices</NavLink>
+          <NavLink href="/about">About</NavLink>
+          <NavLink href="/contact">Contact</NavLink>
           <Link
-            href="#contact"
+            href="/quote"
             className="bg-gradient-to-br from-[#FFD700] to-[#FFA500] text-black px-6 py-2.5 rounded-full font-[var(--font-cinzel)] text-[13px] font-semibold tracking-[1px] hover:translate-y-[-2px] hover:shadow-[0_5px_20px_rgba(255,215,0,0.4)] transition-all"
           >
-            Contact Us
+            Get a Quote
           </Link>
         </nav>
 
@@ -58,17 +59,18 @@ export default function Header() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0a0a] border-t border-[rgba(255,215,0,0.15)] py-4 px-4">
-          <nav className="flex flex-col gap-4">
-            <MobileNavLink href="#gold" onClick={() => setMobileMenuOpen(false)}>Gold</MobileNavLink>
-            <MobileNavLink href="#silver" onClick={() => setMobileMenuOpen(false)}>Silver</MobileNavLink>
-            <MobileNavLink href="#bars" onClick={() => setMobileMenuOpen(false)}>Bars</MobileNavLink>
-            <MobileNavLink href="#rounds" onClick={() => setMobileMenuOpen(false)}>Rounds</MobileNavLink>
+          <nav className="flex flex-col gap-3">
+            <MobileNavLink href="/gold" onClick={() => setMobileMenuOpen(false)}>Gold</MobileNavLink>
+            <MobileNavLink href="/silver" onClick={() => setMobileMenuOpen(false)}>Silver</MobileNavLink>
+            <MobileNavLink href="/spot-prices" onClick={() => setMobileMenuOpen(false)}>Spot Prices</MobileNavLink>
+            <MobileNavLink href="/about" onClick={() => setMobileMenuOpen(false)}>About</MobileNavLink>
+            <MobileNavLink href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</MobileNavLink>
             <Link
-              href="#contact"
+              href="/quote"
               className="bg-gradient-to-br from-[#FFD700] to-[#FFA500] text-black px-6 py-3 rounded-full font-[var(--font-cinzel)] text-sm font-semibold tracking-[1px] text-center mt-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Contact Us
+              Get a Quote
             </Link>
           </nav>
         </div>
