@@ -17,9 +17,10 @@ interface Prices {
 
 interface SpotPriceTickerProps {
   prices: Prices;
+  loading?: boolean;
 }
 
-export default function SpotPriceTicker({ prices }: SpotPriceTickerProps) {
+export default function SpotPriceTicker({ prices, loading }: SpotPriceTickerProps) {
   const [flash, setFlash] = useState<Record<string, string>>({});
   const prevPrices = useRef(prices);
 
@@ -55,8 +56,8 @@ export default function SpotPriceTicker({ prices }: SpotPriceTickerProps) {
     <div className="bg-gradient-to-r from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a] border-b border-[rgba(255,215,0,0.3)] flex items-center py-3 overflow-hidden relative">
       {/* Live Spot Label */}
       <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] px-5 py-2 font-[var(--font-cinzel)] text-[11px] font-bold tracking-[2px] text-[#FFD700] flex items-center gap-2 border-r border-[rgba(255,215,0,0.3)] shrink-0">
-        <span className="w-2 h-2 bg-[#00ff00] rounded-full animate-pulse-dot shadow-[0_0_10px_#00ff00]"></span>
-        LIVE SPOT
+        <span className={`w-2 h-2 rounded-full shadow-[0_0_10px_#00ff00] ${loading ? 'bg-yellow-500 animate-pulse' : 'bg-[#00ff00] animate-pulse-dot'}`}></span>
+        {loading ? 'LOADING' : 'LIVE SPOT'}
       </div>
 
       {/* Scrolling Ticker */}

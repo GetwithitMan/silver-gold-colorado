@@ -6,46 +6,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CoinCard, { Coin } from '@/components/CoinCard';
 import Footer from '@/components/Footer';
-
-// Simulated live spot prices hook (would connect to real API in production)
-function useSpotPrices() {
-  const [prices, setPrices] = useState({
-    gold: { price: 2618.50, change: 12.30, changePercent: 0.47 },
-    silver: { price: 30.94, change: -0.21, changePercent: -0.67 },
-    platinum: { price: 1041.00, change: 8.50, changePercent: 0.82 },
-    palladium: { price: 976.00, change: -15.00, changePercent: -1.51 },
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPrices((prev) => ({
-        gold: {
-          ...prev.gold,
-          price: prev.gold.price + (Math.random() - 0.5) * 2,
-          change: prev.gold.change + (Math.random() - 0.5) * 0.5,
-        },
-        silver: {
-          ...prev.silver,
-          price: prev.silver.price + (Math.random() - 0.5) * 0.1,
-          change: prev.silver.change + (Math.random() - 0.5) * 0.05,
-        },
-        platinum: {
-          ...prev.platinum,
-          price: prev.platinum.price + (Math.random() - 0.5) * 3,
-          change: prev.platinum.change + (Math.random() - 0.5) * 0.5,
-        },
-        palladium: {
-          ...prev.palladium,
-          price: prev.palladium.price + (Math.random() - 0.5) * 4,
-          change: prev.palladium.change + (Math.random() - 0.5) * 0.5,
-        },
-      }));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return prices;
-}
+import { useSpotPrices } from '@/hooks/useSpotPrices';
 
 // Coin data with premiums over spot
 const coins: Coin[] = [
@@ -57,7 +18,7 @@ const coins: Coin[] = [
     purity: '.999 Fine Silver',
     premium: 4.99,
     country: 'USA',
-    year: '2024',
+    year: '2025',
     image: '🦅',
     description: 'The official silver bullion coin of the United States, featuring Lady Liberty and the American Bald Eagle.',
     popular: true,
@@ -70,7 +31,7 @@ const coins: Coin[] = [
     purity: '.9167 Fine Gold',
     premium: 89.99,
     country: 'USA',
-    year: '2024',
+    year: '2025',
     image: '🦅',
     description: "America's premier gold bullion coin, backed by the U.S. government for weight and purity.",
     popular: true,
@@ -83,7 +44,7 @@ const coins: Coin[] = [
     purity: '.9999 Fine Silver',
     premium: 3.99,
     country: 'Canada',
-    year: '2024',
+    year: '2025',
     image: '🍁',
     description: 'One of the purest silver coins in the world with advanced security features.',
   },
@@ -95,7 +56,7 @@ const coins: Coin[] = [
     purity: '.9999 Fine Gold',
     premium: 79.99,
     country: 'Canada',
-    year: '2024',
+    year: '2025',
     image: '🍁',
     description: "The world's purest gold bullion coin, featuring the iconic maple leaf design.",
   },
@@ -107,7 +68,7 @@ const coins: Coin[] = [
     purity: '.999 Fine Silver',
     premium: 2.49,
     country: 'USA',
-    year: '2024',
+    year: '2025',
     image: '🦬',
     description: 'Classic American design at the lowest premiums - perfect for stacking.',
   },
@@ -119,7 +80,7 @@ const coins: Coin[] = [
     purity: '.9999 Fine Gold',
     premium: 99.99,
     country: 'USA',
-    year: '2024',
+    year: '2025',
     image: '🦬',
     description: 'First .9999 pure gold coin from the U.S. Mint, featuring the iconic Buffalo design.',
     popular: true,
@@ -132,7 +93,7 @@ const coins: Coin[] = [
     purity: '.999 Fine Silver',
     premium: 3.49,
     country: 'Austria',
-    year: '2024',
+    year: '2025',
     image: '🎵',
     description: "Europe's most popular silver bullion coin, honoring the Vienna Philharmonic Orchestra.",
   },
@@ -144,7 +105,7 @@ const coins: Coin[] = [
     purity: '.9167 Fine Gold',
     premium: 69.99,
     country: 'South Africa',
-    year: '2024',
+    year: '2025',
     image: '🦌',
     description: 'The original gold bullion coin since 1967, highly recognized worldwide.',
   },
@@ -156,7 +117,7 @@ const coins: Coin[] = [
     purity: '.999 Fine Silver',
     premium: 19.99,
     country: 'Various',
-    year: '2024',
+    year: '2025',
     image: '▬',
     description: 'Perfect for stacking and storage, from trusted refiners worldwide.',
   },
@@ -168,14 +129,15 @@ const coins: Coin[] = [
     purity: '.9999 Fine Gold',
     premium: 49.99,
     country: 'Various',
-    year: '2024',
+    year: '2025',
     image: '▬',
     description: 'PAMP, Credit Suisse, or equivalent - certified and assayed.',
   },
 ];
 
 export default function Home() {
-  const prices = useSpotPrices();
+  // Fetch real prices from Gold-API.com, refresh every 60 seconds
+  const { prices, loading } = useSpotPrices(60000);
   const [activeFilter, setActiveFilter] = useState<'all' | 'gold' | 'silver'>('all');
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -194,7 +156,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] font-[var(--font-cormorant)]">
       {/* Ticker */}
-      <SpotPriceTicker prices={prices} />
+      <SpotPriceTicker prices={prices} loading={loading} />
 
       {/* Header */}
       <Header />
@@ -209,7 +171,7 @@ export default function Home() {
             Today&apos;s Prices
           </h2>
           <p className="text-[#666] text-base mb-8">
-            Live pricing updated every 3 seconds • Prices include spot + premium
+            Live spot prices from Gold-API.com • Prices include spot + premium
           </p>
 
           {/* Filter Tabs */}
