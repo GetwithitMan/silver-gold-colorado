@@ -1,18 +1,25 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useSpotPrices } from '@/hooks/useSpotPrices';
 import SpotPriceTicker from '@/components/SpotPriceTicker';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import { goldCoins, goldBars, getProductsByMetal } from '@/data/products';
+import SellProductCard from '@/components/SellProductCard';
+import BuySellToggle from '@/components/BuySellToggle';
+import { getProductsByMetal } from '@/data/products';
+import { getSellProductsByMetal, getPopularSellProducts } from '@/data/sellPrices';
 
 export default function GoldPage() {
   const { prices, loading } = useSpotPrices(60000);
+  const [mode, setMode] = useState<'buy' | 'sell'>('buy');
   const spotPrices = { gold: prices.gold.price, silver: prices.silver.price };
+  const spotPricesWithPlatinum = { ...spotPrices, platinum: prices.platinum.price };
 
   const featuredGold = getProductsByMetal('gold').filter(p => p.isPopular || p.isFeatured).slice(0, 8);
+  const sellGoldProducts = getSellProductsByMetal('gold').filter(p => p.isPopular).slice(0, 8);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -102,34 +109,61 @@ export default function GoldPage() {
         </div>
       </section>
 
-      {/* Featured Gold Products */}
+      {/* Featured Gold Products with Buy/Sell Toggle */}
       <section className="section-padding px-5 sm:px-10">
         <div className="container-full">
-          <div className="section-header mb-10">
+          <div className="section-header mb-6">
             <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-3 text-gold-gradient">
-              Popular Gold Products
+              {mode === 'buy' ? 'Popular Gold Products' : 'We Buy Your Gold'}
             </h2>
-            <p className="text-[#666]">Our most sought-after gold coins and bars</p>
+            <p className="text-[#666] mb-6">
+              {mode === 'buy'
+                ? 'Our most sought-after gold coins and bars'
+                : 'Get competitive prices when you sell your gold to us'}
+            </p>
+            <BuySellToggle mode={mode} onChange={setMode} />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {featuredGold.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                spotPrices={spotPrices}
-                delay={index * 80}
-              />
-            ))}
-          </div>
+          {mode === 'buy' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {featuredGold.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  spotPrices={spotPrices}
+                  delay={index * 80}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {sellGoldProducts.map((product, index) => (
+                <SellProductCard
+                  key={product.id}
+                  product={product}
+                  spotPrices={spotPricesWithPlatinum}
+                  delay={index * 80}
+                />
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-12">
-            <Link
-              href="/gold/coins"
-              className="inline-block bg-transparent border border-[rgba(255,215,0,0.5)] text-[#FFD700] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(255,215,0,0.1)] transition-all"
-            >
-              View All Gold Products →
-            </Link>
+            {mode === 'buy' ? (
+              <Link
+                href="/gold/coins"
+                className="inline-block bg-transparent border border-[rgba(255,215,0,0.5)] text-[#FFD700] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(255,215,0,0.1)] transition-all"
+              >
+                View All Gold Products →
+              </Link>
+            ) : (
+              <Link
+                href="/quote"
+                className="inline-block bg-gradient-to-br from-[#C0C0C0] to-[#A0A0A0] text-black px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm font-semibold tracking-[1px] hover:translate-y-[-2px] transition-all"
+              >
+                Get a Sell Quote →
+              </Link>
+            )}
           </div>
         </div>
       </section>

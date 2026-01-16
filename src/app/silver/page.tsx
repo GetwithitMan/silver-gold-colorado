@@ -1,18 +1,25 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useSpotPrices } from '@/hooks/useSpotPrices';
 import SpotPriceTicker from '@/components/SpotPriceTicker';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import SellProductCard from '@/components/SellProductCard';
+import BuySellToggle from '@/components/BuySellToggle';
 import { getProductsByMetal } from '@/data/products';
+import { getSellProductsByMetal } from '@/data/sellPrices';
 
 export default function SilverPage() {
   const { prices, loading } = useSpotPrices(60000);
+  const [mode, setMode] = useState<'buy' | 'sell'>('buy');
   const spotPrices = { gold: prices.gold.price, silver: prices.silver.price };
+  const spotPricesWithPlatinum = { ...spotPrices, platinum: prices.platinum.price };
 
   const featuredSilver = getProductsByMetal('silver').filter(p => p.isPopular || p.isFeatured).slice(0, 8);
+  const sellSilverProducts = getSellProductsByMetal('silver').filter(p => p.isPopular).slice(0, 8);
   const goldSilverRatio = (prices.gold.price / prices.silver.price).toFixed(1);
 
   return (
@@ -134,34 +141,61 @@ export default function SilverPage() {
         </div>
       </section>
 
-      {/* Featured Silver Products */}
+      {/* Featured Silver Products with Buy/Sell Toggle */}
       <section className="section-padding px-5 sm:px-10 section-divider">
         <div className="container-full">
-          <div className="section-header mb-10">
+          <div className="section-header mb-6">
             <h2 className="font-[var(--font-cinzel)] text-3xl font-semibold mb-3 text-silver-gradient">
-              Popular Silver Products
+              {mode === 'buy' ? 'Popular Silver Products' : 'We Buy Your Silver'}
             </h2>
-            <p className="text-[#666]">Our most sought-after silver coins, rounds, and bars</p>
+            <p className="text-[#666] mb-6">
+              {mode === 'buy'
+                ? 'Our most sought-after silver coins, rounds, and bars'
+                : 'Get competitive prices when you sell your silver to us'}
+            </p>
+            <BuySellToggle mode={mode} onChange={setMode} />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {featuredSilver.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                spotPrices={spotPrices}
-                delay={index * 80}
-              />
-            ))}
-          </div>
+          {mode === 'buy' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {featuredSilver.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  spotPrices={spotPrices}
+                  delay={index * 80}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {sellSilverProducts.map((product, index) => (
+                <SellProductCard
+                  key={product.id}
+                  product={product}
+                  spotPrices={spotPricesWithPlatinum}
+                  delay={index * 80}
+                />
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-12">
-            <Link
-              href="/silver/coins"
-              className="inline-block bg-transparent border border-[rgba(192,192,192,0.5)] text-[#C0C0C0] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(192,192,192,0.1)] transition-all"
-            >
-              View All Silver Products →
-            </Link>
+            {mode === 'buy' ? (
+              <Link
+                href="/silver/coins"
+                className="inline-block bg-transparent border border-[rgba(192,192,192,0.5)] text-[#C0C0C0] px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm tracking-[1px] hover:bg-[rgba(192,192,192,0.1)] transition-all"
+              >
+                View All Silver Products →
+              </Link>
+            ) : (
+              <Link
+                href="/quote"
+                className="inline-block bg-gradient-to-br from-[#C0C0C0] to-[#A0A0A0] text-black px-8 py-3 rounded-full font-[var(--font-cinzel)] text-sm font-semibold tracking-[1px] hover:translate-y-[-2px] transition-all"
+              >
+                Get a Sell Quote →
+              </Link>
+            )}
           </div>
         </div>
       </section>
