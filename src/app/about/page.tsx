@@ -15,7 +15,7 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <SpotPriceTicker prices={defaultPrices} />
+      <SpotPriceTicker prices={defaultPrices} loading={false} />
       <Header />
 
       {/* Hero Section */}

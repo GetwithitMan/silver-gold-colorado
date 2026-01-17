@@ -10,7 +10,7 @@ import ProductCard from '@/components/ProductCard';
 import SellProductCard from '@/components/SellProductCard';
 import BuySellToggle from '@/components/BuySellToggle';
 import { getProductsByMetal } from '@/data/products';
-import { getSellProductsByMetal, getPopularSellProducts } from '@/data/sellPrices';
+import { getSellProductsByMetal } from '@/data/sellPrices';
 
 export default function GoldPage() {
   const { prices, loading } = useSpotPrices(60000);
